@@ -11,7 +11,7 @@ public class Hooks {
     @After
     public void afterScenario() {
         if (guiceScoped.driver != null) {
-            guiceScoped.driver.close();
+            if (!guiceScoped.browserName.getName().equals("firefox")) guiceScoped.driver.close(); //для firefox close не делаем
             guiceScoped.driver.quit();
         }
     }

@@ -26,7 +26,7 @@ public abstract class BasePage<T> {
     }
 
     public T pageHeaderSholdBeSameAs(String header) {
-        assert this.header.equals(header): "Заголовки не равны";
+        assert this.header.getText().equals(header): "Заголовки не равны";
 
         return (T)this;
     }
