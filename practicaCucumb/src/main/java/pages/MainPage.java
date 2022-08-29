@@ -3,9 +3,10 @@ package pages;
 import com.google.inject.Inject;
 import com.otus.data.Months;
 import com.otus.datatable.DataTableCourse;
+import com.otus.exeptions.NoDataFound;
+import com.otus.exeptions.ValueIsEmpty;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import support.GuiceScoped;
 
@@ -24,11 +25,8 @@ public class MainPage extends BasePage<MainPage> {
         super(guiceScoped);
     }
 
-  //  private final String SITE = "https://otus.ru";
-//    public void openSite() {
-//      //  driver.get(SITE);
-//        guiceScoped.driver.get(System.getProperty("base.url"));
-//    }
+    @FindBy(xpath = "//div[@class='lessons']//a[contains(@class,'lessons__new-item')]")
+    private List<WebElement> allCourses;
 
     @FindBy(xpath = "//div[@class='container container-lessons']")
     private WebElement popularCourses;
@@ -136,13 +134,41 @@ public class MainPage extends BasePage<MainPage> {
         return Months.findMonth(monthRUS);
     }
 
-    public void moveToElement(WebElement element) {
-        Actions actions = new Actions(guiceScoped.driver);
-        actions.moveToElement(element).build().perform();
+    public List<String> getNamesAllCourse() {
+        List<String> names = new ArrayList<>();
+        for (WebElement element : allCourses) {
+            names.add(element.findElement(By.xpath(".//div[contains(@class,'lessons__new-item-title')]")).getText());
+        }
+        return names;
     }
 
-    public void clickToElement(WebElement element) {
-        element.click();
+    //Метод фильтр по названию курса. Если filter=null, то возвращаем весь список
+    public List<WebElement> filterCourseByName(HashMap<WebElement, DataTableCourse> names, String filterName) throws ValueIsEmpty {
+
+        List<WebElement> result = names.entrySet().stream()
+                .filter(p -> p.getValue().getName().contains(filterName))
+                .map(p -> p.getKey())
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    public WebElement getCourseByFilterName(String filterName) throws Exception {
+        //если фильтр не задан, то выкидываем эксепшен
+        if(filterName == null || filterName.isEmpty())
+            throw new ValueIsEmpty("filterName is empty");
+
+        HashMap<WebElement, DataTableCourse> nameAndDate = getNamesAndDates();
+
+        //фильтруем курсы по заданному фильтру
+        List<WebElement> coursesAfterFilter = filterCourseByName(nameAndDate, filterName);
+
+        //Если по заданному фильтру не найдено ни одного курса, то выкидываем эксепшен
+        if (coursesAfterFilter.isEmpty())
+            throw new NoDataFound("coursesAfterFilter is empty");
+
+        //Иначе выбираем первый курс из отфильтрованного списка
+        return coursesAfterFilter.get(0);
     }
 
 }

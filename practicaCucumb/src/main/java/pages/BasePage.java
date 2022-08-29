@@ -2,6 +2,7 @@ package pages;
 
 import com.otus.components.waiters.StandartWaiter;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import support.GuiceScoped;
@@ -27,6 +28,19 @@ public abstract class BasePage<T> {
 
     public T pageHeaderSholdBeSameAs(String header) {
         assert this.header.getText().equals(header): "Заголовки не равны";
+
+        return (T)this;
+    }
+
+    public T clickToElement(WebElement element) {
+        element.click();
+
+        return (T)this;
+    }
+
+    public T moveToElement(WebElement element) {
+        Actions actions = new Actions(guiceScoped.driver);
+        actions.moveToElement(element).build().perform();
 
         return (T)this;
     }
