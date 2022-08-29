@@ -4,6 +4,8 @@ import com.google.inject.Inject;
 import org.openqa.selenium.By;
 import support.GuiceScoped;
 
+import java.util.Locale;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CoursePage extends BasePage<CoursePage> {
@@ -14,7 +16,8 @@ public class CoursePage extends BasePage<CoursePage> {
     }
 
     public void checkTitleCourseByFilter(String title) {
-      assertThat(guiceScoped.driver.findElement(By.tagName("title")).getAttribute("innerText")).contains(title);
+      String expectedResult = guiceScoped.driver.findElement(By.tagName("title")).getAttribute("innerText");
+      assertThat(expectedResult.toUpperCase()).contains(title.toUpperCase());
     }
 
 }
