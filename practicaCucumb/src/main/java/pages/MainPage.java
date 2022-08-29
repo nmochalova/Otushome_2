@@ -65,6 +65,13 @@ public class MainPage extends BasePage<MainPage> {
             nameAndDate.put(element, new DataTableCourse(nameCourse, dateCourse));
         }
 
+        for(Map.Entry<WebElement, DataTableCourse> entry : nameAndDate.entrySet()) {
+            Date dt = parserDateRegex(entry.getValue().getDateString());
+            if (dt != null) {
+                entry.getValue().setDate(dt);
+            }
+        }
+
         return nameAndDate;
     }
 
@@ -128,6 +135,15 @@ public class MainPage extends BasePage<MainPage> {
         }
     }
 
+    private Date stringToDate(String date) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+            return formatter.parse(date);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private String getMonth(String month) {
         String monthRUS = String.valueOf(month.toCharArray(), 0, 3);
 
@@ -146,7 +162,7 @@ public class MainPage extends BasePage<MainPage> {
     public List<WebElement> filterCourseByName(HashMap<WebElement, DataTableCourse> names, String filterName) throws ValueIsEmpty {
 
         List<WebElement> result = names.entrySet().stream()
-                .filter(p -> p.getValue().getName().contains(filterName))
+                .filter(p -> p.getValue().getName().toUpperCase().contains(filterName.toUpperCase()))
                 .map(p -> p.getKey())
                 .collect(Collectors.toList());
 
@@ -165,10 +181,46 @@ public class MainPage extends BasePage<MainPage> {
 
         //Если по заданному фильтру не найдено ни одного курса, то выкидываем эксепшен
         if (coursesAfterFilter.isEmpty())
-            throw new NoDataFound("coursesAfterFilter is empty");
+            throw new NoDataFound("List of courses after filter is empty");
 
         //Иначе выбираем первый курс из отфильтрованного списка
         return coursesAfterFilter.get(0);
     }
 
+    public List<DataTableCourse> getCourseByDate(String dateCourse) throws ValueIsEmpty, NoDataFound {
+        //если дата не задана, то выкидываем эксепшен
+        if(dateCourse == null)
+            throw new ValueIsEmpty("Date of course is empty");
+
+        HashMap<WebElement, DataTableCourse> nameAndDate = getNamesAndDates();
+
+        //фильтруем курсы по заданной дате
+        List<DataTableCourse> courseAfterFilterByDate = filterCourseByDate(nameAndDate, stringToDate(dateCourse));
+
+        //Если по заданному фильтру не найдено ни одного курса, то выкидываем эксепшен
+        if (courseAfterFilterByDate.isEmpty())
+            throw new NoDataFound("Course is not found by date filter");
+
+        return courseAfterFilterByDate;
+    }
+
+    private List<DataTableCourse> filterCourseByDate(HashMap<WebElement, DataTableCourse> nameAndDate, Date dateCourse) {
+        List<DataTableCourse> result = nameAndDate.entrySet().stream()
+                .filter(p -> p.getValue().getDate()!=null)
+                .filter(p -> p.getValue().getDate().equals(dateCourse))
+                .map(p -> p.getValue())
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    private List<DataTableCourse> filterCoursesAfterDate(HashMap<WebElement, DataTableCourse> nameAndDate, Date dateCourse) {
+        List<DataTableCourse> result = nameAndDate.entrySet().stream()
+                .filter(p -> p.getValue().getDate()!=null)
+                .filter(p -> p.getValue().getDate().after(dateCourse))
+                .map(p -> p.getValue())
+                .collect(Collectors.toList());
+
+        return result;
+    }
 }

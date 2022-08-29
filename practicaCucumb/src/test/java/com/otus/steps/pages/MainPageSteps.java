@@ -1,12 +1,20 @@
 package com.otus.steps.pages;
 
 import com.google.inject.Inject;
+import com.otus.datatable.DataTableCourse;
+import com.otus.exeptions.NoDataFound;
 import com.otus.exeptions.ValueIsEmpty;
-import io.cucumber.java.ru.А;
-import io.cucumber.java.ru.И;
-import io.cucumber.java.ru.Тогда;
+import com.sun.javafx.binding.StringFormatter;
+import io.cucumber.java.ru.*;
+
+
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Format;
 import org.openqa.selenium.WebElement;
 import pages.MainPage;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class MainPageSteps {
     @Inject
@@ -27,7 +35,27 @@ public class MainPageSteps {
     public void clickCourseByFilterName(String filterName) throws Exception {
         WebElement course = mainPage.getCourseByFilterName(filterName);
 
-//        mainPage.moveToElement(course);
         mainPage.clickToElement(course);
     }
+
+    @Также("Ищу курс стартующий на дату {string}")
+    public void searchCourseByDate(String arg) throws Exception {
+        List<DataTableCourse> dataTableCourse = mainPage.getCourseByDate(arg);
+
+        System.out.println();
+        System.out.println("***************************************");
+        dataTableCourse.forEach(p ->
+                System.out.println(String.format("На дату %s найден курс: Описание = %s, Дата = %s",
+                        arg, p.getName(), p.getDateString())));
+
+        System.out.println("***************************************");
+        System.out.println();
+
+    }
+
+    @Также("^Ищу курсы стартующих после даты (.+)$")
+    public void searchCoursesAfterDate( Date arg) {
+        System.out.println(arg);
+    }
+
 }

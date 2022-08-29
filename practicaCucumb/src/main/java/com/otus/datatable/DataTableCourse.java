@@ -1,6 +1,7 @@
 package com.otus.datatable;
 
 import java.util.Date;
+import java.util.Locale;
 
 public class DataTableCourse {
     private String name;
