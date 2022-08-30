@@ -14,7 +14,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -187,15 +189,20 @@ public class MainPage extends BasePage<MainPage> {
         return coursesAfterFilter.get(0);
     }
 
-    public List<DataTableCourse> getCourseByDate(String dateCourse) throws ValueIsEmpty, NoDataFound {
+    public List<DataTableCourse> getCourseByDate(String dateCourse, Boolean isEq) throws ValueIsEmpty, NoDataFound {
         //если дата не задана, то выкидываем эксепшен
         if(dateCourse == null)
             throw new ValueIsEmpty("Date of course is empty");
 
         HashMap<WebElement, DataTableCourse> nameAndDate = getNamesAndDates();
+        List<DataTableCourse> courseAfterFilterByDate;
 
-        //фильтруем курсы по заданной дате
-        List<DataTableCourse> courseAfterFilterByDate = filterCourseByDate(nameAndDate, stringToDate(dateCourse));
+        if (isEq) {  //ищем курсы на указанную дату
+              courseAfterFilterByDate = filterCourseByDate(nameAndDate,
+                (Date d)->d.equals(stringToDate(dateCourse)));}
+        else {      //ищем курсы после указанной даты
+              courseAfterFilterByDate = filterCourseByDate(nameAndDate,
+                (Date d)->d.after(stringToDate(dateCourse)));}
 
         //Если по заданному фильтру не найдено ни одного курса, то выкидываем эксепшен
         if (courseAfterFilterByDate.isEmpty())
@@ -204,20 +211,12 @@ public class MainPage extends BasePage<MainPage> {
         return courseAfterFilterByDate;
     }
 
-    private List<DataTableCourse> filterCourseByDate(HashMap<WebElement, DataTableCourse> nameAndDate, Date dateCourse) {
+    private List<DataTableCourse> filterCourseByDate(HashMap<WebElement, DataTableCourse> nameAndDate,
+                                                     Predicate<Date> filterPredicate) {
+
         List<DataTableCourse> result = nameAndDate.entrySet().stream()
                 .filter(p -> p.getValue().getDate()!=null)
-                .filter(p -> p.getValue().getDate().equals(dateCourse))
-                .map(p -> p.getValue())
-                .collect(Collectors.toList());
-
-        return result;
-    }
-
-    private List<DataTableCourse> filterCoursesAfterDate(HashMap<WebElement, DataTableCourse> nameAndDate, Date dateCourse) {
-        List<DataTableCourse> result = nameAndDate.entrySet().stream()
-                .filter(p -> p.getValue().getDate()!=null)
-                .filter(p -> p.getValue().getDate().after(dateCourse))
+                .filter(p -> filterPredicate.test(p.getValue().getDate()))
                 .map(p -> p.getValue())
                 .collect(Collectors.toList());
 

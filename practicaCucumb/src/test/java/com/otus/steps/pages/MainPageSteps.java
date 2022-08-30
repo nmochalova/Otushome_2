@@ -40,22 +40,35 @@ public class MainPageSteps {
 
     @Также("Ищу курс стартующий на дату {string}")
     public void searchCourseByDate(String arg) throws Exception {
-        List<DataTableCourse> dataTableCourse = mainPage.getCourseByDate(arg);
+        Boolean isEq = true;
+        List<DataTableCourse> dataTableCourse = mainPage.getCourseByDate(arg,isEq);
+        printCourses(dataTableCourse, arg, isEq);
+    }
 
+    @Также("Ищу курсы стартующих после даты {string}")
+    public void searchCoursesAfterDate(String arg) throws Exception {
+        Boolean isEq = false;
+        List<DataTableCourse> dataTableCourse = mainPage.getCourseByDate(arg,isEq);
+        printCourses(dataTableCourse, arg, isEq);
+    }
+
+    private void printCourses(List<DataTableCourse> dataTableCourse, String arg, Boolean isEq) {
+        String str = (isEq ? "На дату" : "Позже даты");
         System.out.println();
         System.out.println("***************************************");
         dataTableCourse.forEach(p ->
-                System.out.println(String.format("На дату %s найден курс: Описание = %s, Дата = %s",
-                        arg, p.getName(), p.getDateString())));
+                System.out.println(String.format("%s %s найден курс: Описание = %s, Дата = %s",
+                        str, arg, p.getName(), p.getDateString())));
 
         System.out.println("***************************************");
         System.out.println();
-
     }
 
-    @Также("^Ищу курсы стартующих после даты (.+)$")
-    public void searchCoursesAfterDate( Date arg) {
-        System.out.println(arg);
-    }
+//    @Также("^Ищу курсы стартующих после даты (.+)$")
+//    public void searchCoursesAfterDate(Date arg) {
+//        System.out.println(arg);
+//    }
+
+
 
 }
