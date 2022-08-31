@@ -8,7 +8,6 @@ public class DataTableCourse {
     private String dateString;
     private Date date;
 
-
     public DataTableCourse(String name, String dateString) {
         this.name = name;
         this.dateString = dateString;

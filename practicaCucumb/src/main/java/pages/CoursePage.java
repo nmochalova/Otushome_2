@@ -4,8 +4,6 @@ import com.google.inject.Inject;
 import org.openqa.selenium.By;
 import support.GuiceScoped;
 
-import java.util.Locale;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CoursePage extends BasePage<CoursePage> {

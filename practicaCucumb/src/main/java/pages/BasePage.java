@@ -6,6 +6,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import support.GuiceScoped;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public abstract class BasePage<T> {
     protected GuiceScoped guiceScoped;
@@ -27,7 +28,10 @@ public abstract class BasePage<T> {
     }
 
     public T pageHeaderSholdBeSameAs(String header) {
-        assert this.header.getText().equals(header): "Заголовки не равны";
+        String title = this.header.getText();
+        assertThat(title.equals(header))
+                .as("Titles should be equals")
+                .isTrue();
 
         return (T)this;
     }
