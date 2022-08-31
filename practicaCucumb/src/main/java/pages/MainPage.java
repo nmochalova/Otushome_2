@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import support.GuiceScoped;
 
+import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -53,7 +54,8 @@ public class MainPage extends BasePage<MainPage> {
             dateCourse = element
                     .findElement(By.xpath(".//div[@class='lessons__new-item-start']"))
                     .getText();
-            nameAndDate.put(element, new DataTableCourse(nameCourse, dateCourse));
+
+            nameAndDate.put(element, DataTableCourse.builder().name(nameCourse).dateString(dateCourse).build());
         }
 
         List<WebElement> blockSpecial = specializationsCourses.findElements(By.xpath("./div[@class='lessons']/a"));
@@ -64,7 +66,8 @@ public class MainPage extends BasePage<MainPage> {
             dateCourse = element
                     .findElement(By.xpath(".//div[@class='lessons__new-item-time']"))
                     .getText();
-            nameAndDate.put(element, new DataTableCourse(nameCourse, dateCourse));
+
+            nameAndDate.put(element,DataTableCourse.builder().name(nameCourse).dateString(dateCourse).build());
         }
 
         for(Map.Entry<WebElement, DataTableCourse> entry : nameAndDate.entrySet()) {

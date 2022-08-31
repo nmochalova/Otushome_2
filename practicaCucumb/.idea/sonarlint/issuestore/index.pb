@@ -1,12 +1,8 @@
 
 d
 4src/main/java/com/otus/components/BaseComponent.java,7\e\7e090c07c327de142d0ad14fa84714ac5ba511ac
-\
-,src/main/java/com/otus/data/BrowserData.java,1\7\17719ccf4caf7596c77ec5cfc828627e52f8221f
 W
 'src/main/java/com/otus/data/Months.java,6\4\64c0d0894d77ca017793cb276c2f095185abe16a
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 p
 @src/test/java/com/otus/steps/components/NavigationMenuSteps.java,8\c\8ca39b1b0630a4e85d606b0697f42e487fe88361
 V
