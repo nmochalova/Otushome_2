@@ -10,6 +10,7 @@ import io.cucumber.java.ru.*;
 
 import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Format;
 import org.openqa.selenium.WebElement;
+import pages.CoursePage;
 import pages.MainPage;
 
 import java.text.DateFormat;
@@ -19,6 +20,9 @@ import java.util.List;
 public class MainPageSteps {
     @Inject
     public MainPage mainPage;
+
+    @Inject
+    public CoursePage coursePage;
 
     @И("Открываю главную страницу сайта")
     public void openMainPage() {
@@ -64,11 +68,18 @@ public class MainPageSteps {
         System.out.println();
     }
 
-//    @Также("^Ищу курсы стартующих после даты (.+)$")
-//    public void searchCoursesAfterDate(Date arg) {
-//        System.out.println(arg);
-//    }
 
+    @И("Я выбираю самый ранний курс")
+    public void chooseMostEarlyCourse() {
+        System.out.println("*********** The most early course is ********************");
+        String titleBeforeClick = mainPage.getLatestEarlyCourse(false);
+        coursePage.titlesShouldBeSomeMatch(titleBeforeClick);
+    }
 
-
+    @И("Я выбираю самый поздний курс")
+    public void chooseMostLatestCourse() {
+        System.out.println("*********** The most latest course is ********************");
+        String titleBeforeClick = mainPage.getLatestEarlyCourse(true);
+        coursePage.titlesShouldBeSomeMatch(titleBeforeClick);
+    }
 }

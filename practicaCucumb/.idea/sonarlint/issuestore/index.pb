@@ -9,9 +9,5 @@ V
 &src/main/java/support/GuiceScoped.java,f\2\f2b655178d3bc4dea3c4e91dd021b7b9e5ade8ce
 h
 8src/test/java/com/otus/steps/common/CommonPageSteps.java,f\f\ff4ade8d781d90ef74f7a1b13b48632cb674b4ec
-g
-7src/test/java/com/otus/steps/pages/CoursePageSteps.java,7\1\71c75a43fafa3e5ab2db281421a966c902ebfecb
-S
-#src/main/java/pages/CoursePage.java,5\d\5dee93f76342f2d48639b1720660cff07e9fe9d0
 n
 >src/main/java/com/otus/components/NavigationMenuComponent.java,9\7\97dc5faa40d19835d9aa7f10b22db2913a06768d

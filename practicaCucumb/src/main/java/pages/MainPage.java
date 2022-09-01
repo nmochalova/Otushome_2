@@ -22,6 +22,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class MainPage extends BasePage<MainPage> {
     @Inject
     public MainPage(GuiceScoped guiceScoped) {
@@ -225,4 +227,19 @@ public class MainPage extends BasePage<MainPage> {
 
         return result;
     }
+
+    public String getLatestEarlyCourse(Boolean isLatest) {
+        //Набираем в Map плитки всех курсов на странице, отдельно в таблицу парсим заголовок и дату курса.
+        HashMap<WebElement, DataTableCourse> nameAndDate = getNamesAndDates();
+
+        //Выбираем самый ранний курс
+        WebElement course = getMinMaxDateOfCourse(nameAndDate, isLatest);
+        String titleBeforeClick = getNameOfCourse(course).toUpperCase();
+
+        //наводим курсор на выбранный курс
+        clickToElement(course);
+
+        return titleBeforeClick;
+    }
+
 }
