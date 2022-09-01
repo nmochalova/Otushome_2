@@ -1,6 +1,6 @@
-# OtusHomeworkFirst
+# OtusHomework_2
 
-Команда запуска тестов:
+Команда запуска тестов из mvn:
 
 `
 clean test -DforkCount=0 -Dcucumber.filter.tags=@smoke
