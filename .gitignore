@@ -1,9 +1,6 @@
 /practicaCucumb/target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### IntelliJ IDEA ###
+
 /practicaCucumb/.idea/modules.xml
 /practicaCucumb/.idea/jarRepositories.xml
 /practicaCucumb/.idea/compiler.xml
@@ -12,28 +9,3 @@
 /practicaCucumb/*.iws
 /practicaCucumb/*.iml
 /practicaCucumb/*.ipr
-
-### Eclipse ###
-/practicaCucumb/.apt_generated
-/practicaCucumb/.classpath
-/practicaCucumb/.factorypath
-/practicaCucumb/.project
-/practicaCucumb/.settings
-/practicaCucumb/.springBeans
-/practicaCucumb/.sts4-cache
-
-### NetBeans ###
-/practicaCucumb//nbproject/private/
-/practicaCucumb//nbbuild/
-/practicaCucumb//dist/
-/practicaCucumb//nbdist/
-/practicaCucumb//.nb-gradle/
-/practicaCucumb/build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-/practicaCucumb/.vscode/
-
-### Mac OS ###
-/practicaCucumb/.DS_Store
