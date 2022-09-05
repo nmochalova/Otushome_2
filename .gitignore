@@ -1,39 +1,39 @@
-target/
+/practicaCucumb/target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-.idea/sonarlint/issuestore
-*.iws
-*.iml
-*.ipr
+/practicaCucumb/.idea/modules.xml
+/practicaCucumb/.idea/jarRepositories.xml
+/practicaCucumb/.idea/compiler.xml
+/practicaCucumb/.idea/libraries/
+/practicaCucumb/.idea/sonarlint/issuestore
+/practicaCucumb/*.iws
+/practicaCucumb/*.iml
+/practicaCucumb/*.ipr
 
 ### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+/practicaCucumb/.apt_generated
+/practicaCucumb/.classpath
+/practicaCucumb/.factorypath
+/practicaCucumb/.project
+/practicaCucumb/.settings
+/practicaCucumb/.springBeans
+/practicaCucumb/.sts4-cache
 
 ### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
+/practicaCucumb//nbproject/private/
+/practicaCucumb//nbbuild/
+/practicaCucumb//dist/
+/practicaCucumb//nbdist/
+/practicaCucumb//.nb-gradle/
+/practicaCucumb/build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+/practicaCucumb/.vscode/
 
 ### Mac OS ###
-.DS_Store
+/practicaCucumb/.DS_Store

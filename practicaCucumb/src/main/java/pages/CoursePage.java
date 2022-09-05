@@ -3,9 +3,7 @@ package pages;
 import com.google.inject.Inject;
 import org.openqa.selenium.By;
 import support.GuiceScoped;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CoursePage extends BasePage<CoursePage> {
 

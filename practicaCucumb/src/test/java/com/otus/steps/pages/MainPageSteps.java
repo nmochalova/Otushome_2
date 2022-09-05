@@ -2,19 +2,10 @@ package com.otus.steps.pages;
 
 import com.google.inject.Inject;
 import com.otus.datatable.DataTableCourse;
-import com.otus.exeptions.NoDataFound;
-import com.otus.exeptions.ValueIsEmpty;
-import com.sun.javafx.binding.StringFormatter;
 import io.cucumber.java.ru.*;
-
-
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Format;
 import org.openqa.selenium.WebElement;
 import pages.CoursePage;
 import pages.MainPage;
-
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class MainPageSteps {
